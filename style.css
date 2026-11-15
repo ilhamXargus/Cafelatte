@@ -310,3 +310,20 @@ nav a {
     .main-content { max-width: 100%; padding: 20px; }
     .cart-sidebar { position: static; width: 100%; }
 }
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Tambahan styling agar tampilan Tentang Kami rapi */
+.about-section {
+    margin-top: 50px;
+    padding: 30px;
+    background-color: #ffffff; /* Sesuaikan dengan warna tema Anda */
+    border-radius: 12px;
+}
+
+.about-content p {
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
