@@ -9,9 +9,28 @@ const menuData = [
 
 let cart = [];
 let selectedPayment = "QRIS";
+let promoAktif = false; // Status apakah tombol promo sedang dipakai
 
 function formatRupiah(angka) {
     return "Rp" + angka.toLocaleString("id-ID");
+}
+
+// Fungsi baru untuk mengaktifkan / menonaktifkan promo
+function aktifkanPromo() {
+    promoAktif = !promoAktif;
+    const tombolPromo = document.getElementById('btn-klaim-promo');
+    
+    if (tombolPromo) {
+        if (promoAktif) {
+            tombolPromo.innerText = "Promo Terpasang ✓";
+            tombolPromo.style.backgroundColor = "#4CAF50";
+        } else {
+            tombolPromo.innerText = "Gunakan Promo";
+            tombolPromo.style.backgroundColor = "";
+        }
+    }
+    
+    updateCartUI();
 }
 
 function renderMenu(filter = 'all') {
@@ -70,6 +89,8 @@ function updateCartUI() {
     const cartItemsEl = document.getElementById('cart-items');
     const countEl = document.getElementById('cart-count');
     const totalEl = document.getElementById('cart-total');
+    const discountRowEl = document.getElementById('discount-row');
+    const discountEl = document.getElementById('cart-discount');
 
     let totalQty = 0;
     let totalPrice = 0;
@@ -98,8 +119,24 @@ function updateCartUI() {
         });
     }
 
+    // Perhitungan Diskon 20% (jika promo aktif & minimal 2 item)
+    let diskon = 0;
+    if (promoAktif && totalQty >= 2) {
+        diskon = totalPrice * 0.20;
+        if (discountRowEl && discountEl) {
+            discountRowEl.style.display = "flex";
+            discountEl.innerText = "-" + formatRupiah(diskon);
+        }
+    } else {
+        if (discountRowEl) {
+            discountRowEl.style.display = "none";
+        }
+    }
+
+    let finalPrice = totalPrice - diskon;
+
     countEl.innerText = totalQty;
-    totalEl.innerText = formatRupiah(totalPrice);
+    totalEl.innerText = formatRupiah(finalPrice);
 }
 
 function selectPayment(el) {
@@ -115,7 +152,16 @@ function checkout() {
     }
     const total = document.getElementById('cart-total').innerText;
     alert(`Terima kasih! Pesanan Anda sebesar ${total} sedang diproses melalui pembayaran ${selectedPayment}.`);
+    
+    // Reset keranjang dan promo setelah pembayaran selesai
     cart = [];
+    promoAktif = false;
+    const tombolPromo = document.getElementById('btn-klaim-promo');
+    if (tombolPromo) {
+        tombolPromo.innerText = "Gunakan Promo";
+        tombolPromo.style.backgroundColor = "";
+    }
+    
     updateCartUI();
 }
 
