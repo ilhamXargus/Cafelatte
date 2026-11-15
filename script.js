@@ -1,25 +1,25 @@
 const menuData = [
-    { id: 1, name: "Es Kopi Susu Senja", category: "kopi", price: 22000, desc: "Espresso, fresh milk, dan gula aren organik.", img: "https://unsplash.com" },
-    { id: 2, name: "Classic Cappuccino", category: "kopi", price: 24000, desc: "Perpaduan espresso pekat dan foam susu lembut.", img: "https://unsplash.com" },
-    { id: 3, name: "Creamy Matcha Latte", category: "non-kopi", price: 25000, desc: "Pure matcha asli Uji Jepang dengan susu segar.", img: "https://unsplash.com" },
-    { id: 4, name: "Flaky Butter Croissant", category: "camilan", price: 18000, desc: "Croissant renyah panggang hangat dengan mentega Prancis.", img: "https://unsplash.com" },
-    { id: 5, name: "Iced Americano", category: "kopi", price: 18000, desc: "Double shot espresso Arabika Gayo dingin menyegarkan.", img: "https://unsplash.com" },
-    { id: 6, name: "Artisan Peach Tea", category: "non-kopi", price: 20000, desc: "Teh hitam pilihan dengan potongan buah persik manis.", img: "https://unsplash.com" }
+    { id: 1, name: "Es Kopi Susu Senja", category: "kopi", price: 22000, desc: "Espresso, fresh milk, dan gula aren organik.", img: "https://plus.unsplash.com/premium_photo-1677607237294-b041e4b57391?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D" },
+    { id: 2, name: "Classic Cappuccino", category: "kopi", price: 24000, desc: "Perpaduan espresso pekat dan foam susu lembut.", img: "https://images.unsplash.com/photo-1710173472469-9d28e977914c?q=80&w=916&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D" },
+    { id: 3, name: "Creamy Matcha Latte", category: "non-kopi", price: 25000, desc: "Pure matcha asli Uji Jepang dengan susu segar.", img: "https://images.unsplash.com/photo-1775846933630-3c1531299e5a?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D" },
+    { id: 4, name: "Flaky Butter Croissant", category: "camilan", price: 18000, desc: "Croissant renyah panggang hangat dengan mentega Prancis.", img: "https://images.unsplash.com/photo-1612366747681-e4ca6992b1e9?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D" },
+    { id: 5, name: "Iced Americano", category: "kopi", price: 18000, desc: "Double shot espresso Arabika Gayo dingin menyegarkan.", img: "https://images.unsplash.com/photo-1517959105821-eaf2591984ca?q=80&w=1173&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D" },
+    { id: 6, name: "Artisan Peach Tea", category: "non-kopi", price: 20000, desc: "Teh hitam pilihan dengan potongan buah persik manis.", img: "https://images.unsplash.com/photo-1597916374805-77c812a72447?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D" }
 ];
 
 let cart = [];
 let selectedPayment = "QRIS";
-let promoAktif = false;
-let currentCategory = 'all';
+let promoAktif = false; // Status apakah tombol promo sedang dipakai
 
 function formatRupiah(angka) {
     return "Rp" + angka.toLocaleString("id-ID");
 }
 
+// Fungsi baru untuk mengaktifkan / menonaktifkan promo
 function aktifkanPromo() {
     promoAktif = !promoAktif;
     const tombolPromo = document.getElementById('btn-klaim-promo');
-    
+   
     if (tombolPromo) {
         if (promoAktif) {
             tombolPromo.innerText = "Promo Terpasang ✓";
@@ -29,24 +29,15 @@ function aktifkanPromo() {
             tombolPromo.style.backgroundColor = "";
         }
     }
+   
     updateCartUI();
 }
 
-function renderMenu() {
+function renderMenu(filter = 'all') {
     const container = document.getElementById('menu-container');
-    const keyword = document.getElementById('search-input').value.toLowerCase();
     container.innerHTML = '';
 
-    const filtered = menuData.filter(item => {
-        const matchCategory = currentCategory === 'all' || item.category === currentCategory;
-        const matchSearch = item.name.toLowerCase().includes(keyword) || item.desc.toLowerCase().includes(keyword);
-        return matchCategory && matchSearch;
-    });
-
-    if (filtered.length === 0) {
-        container.innerHTML = '<p style="color: #8D6E63; grid-column: 1/-1; text-align: center; padding: 20px;">Menu tidak ditemukan. Coba kata kunci lain!</p>';
-        return;
-    }
+    const filtered = filter === 'all' ? menuData : menuData.filter(item => item.category === filter);
 
     filtered.forEach(item => {
         container.innerHTML += `
@@ -68,12 +59,7 @@ function renderMenu() {
 function filterMenu(category, btn) {
     document.querySelectorAll('.categories button').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    currentCategory = category;
-    renderMenu();
-}
-
-function searchMenu() {
-    renderMenu();
+    renderMenu(category);
 }
 
 function addToCart(id) {
@@ -105,7 +91,6 @@ function updateCartUI() {
     const totalEl = document.getElementById('cart-total');
     const discountRowEl = document.getElementById('discount-row');
     const discountEl = document.getElementById('cart-discount');
-    const promoHintEl = document.getElementById('promo-hint');
 
     let totalQty = 0;
     let totalPrice = 0;
@@ -134,21 +119,18 @@ function updateCartUI() {
         });
     }
 
-    // Logika Diskon & Peringatan Syarat Minimal 2 Item
+    // Perhitungan Diskon 20% (jika promo aktif & minimal 2 item)
     let diskon = 0;
-    if (promoAktif) {
-        if (totalQty >= 2) {
-            diskon = totalPrice * 0.20;
+    if (promoAktif && totalQty >= 2) {
+        diskon = totalPrice * 0.20;
+        if (discountRowEl && discountEl) {
             discountRowEl.style.display = "flex";
             discountEl.innerText = "-" + formatRupiah(diskon);
-            if (promoHintEl) promoHintEl.style.display = "none";
-        } else {
-            discountRowEl.style.display = "none";
-            if (promoHintEl) promoHintEl.style.display = "block";
         }
     } else {
-        discountRowEl.style.display = "none";
-        if (promoHintEl) promoHintEl.style.display = "none";
+        if (discountRowEl) {
+            discountRowEl.style.display = "none";
+        }
     }
 
     let finalPrice = totalPrice - diskon;
@@ -168,45 +150,18 @@ function checkout() {
         alert("Silakan pilih minimal 1 menu terlebih dahulu!");
         return;
     }
-
     const total = document.getElementById('cart-total').innerText;
-    const meja = document.getElementById('table-number').value.trim() || "Takeaway / Bawa Pulang";
-    const catatan = document.getElementById('order-note').value.trim() || "-";
-    const antrean = "#CF-" + Math.floor(10 + Math.random() * 90);
-
-    document.getElementById('receipt-queue').innerText = antrean;
-
-    let daftarMenuHTML = cart.map(item => 
-        `<div class="receipt-item"><span>${item.qty}x ${item.name}</span><span>${formatRupiah(item.price * item.qty)}</span></div>`
-    ).join('');
-
-    document.getElementById('receipt-details').innerHTML = `
-        <p><strong>Lokasi:</strong> ${meja}</p>
-        <p><strong>Catatan:</strong> ${catatan}</p>
-        <p><strong>Metode Bayar:</strong> ${selectedPayment}</p>
-        <hr style="border: 0; border-top: 1px dashed #D7CCC8; margin: 12px 0;">
-        ${daftarMenuHTML}
-        <hr style="border: 0; border-top: 1px dashed #D7CCC8; margin: 12px 0;">
-        <div class="receipt-item" style="font-weight: bold; font-size: 16px; color: #3E2723;">
-            <span>Total Bayar</span><span>${total}</span>
-        </div>
-    `;
-
-    document.getElementById('receipt-modal').style.display = 'flex';
-}
-
-function closeReceipt() {
-    document.getElementById('receipt-modal').style.display = 'none';
+    alert(`Terima kasih! Pesanan Anda sebesar ${total} sedang diproses melalui pembayaran ${selectedPayment}.`);
+   
+    // Reset keranjang dan promo setelah pembayaran selesai
     cart = [];
     promoAktif = false;
-    document.getElementById('table-number').value = '';
-    document.getElementById('order-note').value = '';
-    
     const tombolPromo = document.getElementById('btn-klaim-promo');
     if (tombolPromo) {
         tombolPromo.innerText = "Gunakan Promo";
         tombolPromo.style.backgroundColor = "";
     }
+   
     updateCartUI();
 }
 
