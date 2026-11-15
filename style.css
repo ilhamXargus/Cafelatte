@@ -327,3 +327,88 @@ html {
     line-height: 1.6;
     margin-bottom: 12px;
 }
+
+/* Efek scroll halus saat menu navigasi diklik */
+html {
+    scroll-behavior: smooth;
+}
+
+/* --- Styling Bagian Promo --- */
+.promo-section {
+    margin: 35px 0;
+}
+
+.promo-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    background: linear-gradient(135deg, #3E2723, #5D4037);
+    color: #FFF8F0;
+    padding: 20px 24px;
+    border-radius: 14px;
+    box-shadow: 0 6px 16px rgba(62, 39, 35, 0.15);
+}
+
+.promo-banner p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.promo-banner strong {
+    color: #FFD54F;
+}
+
+#btn-klaim-promo {
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* --- Styling Bagian Tentang Kami --- */
+.about-section {
+    margin-top: 45px;
+    margin-bottom: 30px;
+    padding: 28px;
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    border: 1px solid #EFEBE9;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+
+.about-content p {
+    color: #5D4037;
+    line-height: 1.7;
+    font-size: 14.5px;
+    margin-bottom: 18px;
+}
+
+.about-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px dashed #D7CCC8;
+}
+
+.about-info p {
+    margin: 0;
+    background-color: #FAF6F3;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    color: #3E2723;
+}
+
+/* Penyesuaian tampilan layar kecil / HP */
+@media (max-width: 768px) {
+    .promo-banner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    #btn-klaim-promo {
+        width: 100%;
+    }
+}
+
