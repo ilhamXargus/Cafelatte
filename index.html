@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Cafelatte - Seduh Kebahagiaan</title>
+    <title>Cafelatte - Seduh Kebahagiaan</title>
     <link href="https://googleapis.com" rel="stylesheet">
     <!-- Menghubungkan ke file CSS -->
     <link rel="stylesheet" href="style.css">
@@ -27,6 +27,17 @@
             <button class="btn-primary" onclick="document.getElementById('menu').scrollIntoView({behavior: 'smooth'})">Pesan Sekarang</button>
         </section>
 
+        <!-- Bagian Promo (Opsional, agar link #promo juga berfungsi) -->
+        <section id="promo" class="promo-section">
+            <div class="section-header">
+                <h2>Promo Spesial Hari Ini</h2>
+            </div>
+            <div class="promo-banner">
+                <p>🎉 <strong>Diskon 20%</strong> untuk pembelian minimal 2 cup kopi varian apa saja!</p>
+            </div>
+        </section>
+
+        <!-- Bagian Menu -->
         <section id="menu">
             <div class="section-header">
                 <h2>Menu Pilihan Hari Ini</h2>
@@ -40,6 +51,24 @@
 
             <div class="menu-grid" id="menu-container">
                 <!-- Daftar menu akan diisi otomatis oleh JavaScript -->
+            </div>
+        </section>
+
+        <!-- Bagian Tentang Kami (Target dari href="#tentang") -->
+        <section id="tentang" class="about-section">
+            <div class="section-header">
+                <h2>Tentang Kami</h2>
+            </div>
+            <div class="about-content">
+                <p>
+                    <strong>Cafelatte</strong> hadir untuk membawa kehangatan kopi lokal terbaik langsung ke meja Anda. 
+                    Kami bekerja sama dengan petani kopi nusantara untuk memastikan setiap biji kopi disangrai dengan sempurna dan diseduh sepenuh hati.
+                </p>
+                <div class="about-info">
+                    <p>📍 <strong>Alamat:</strong> Jl. Kopi Nusantara No. 12</p>
+                    <p>⏰ <strong>Jam Buka:</strong> Setiap Hari, 08.00 - 22.00 WIB</p>
+                    <p>📞 <strong>Kontak:</strong> 0812-3456-7890</p>
+                </div>
             </div>
         </section>
     </div>
@@ -68,24 +97,6 @@
 
             <button class="btn-checkout" onclick="checkout()">Lanjut Pembayaran</button>
         </div>
-
-                <!-- Letakkan kode ini tepat setelah </section> milik #menu -->
-        <section id="tentang" class="about-section">
-            <div class="section-header">
-                <h2>Tentang Cafelatte</h2>
-            </div>
-            <div class="about-content">
-                <p>
-                    <strong>Cafelatte</strong> hadir untuk membawa kehangatan kopi lokal terbaik langsung ke meja Anda. 
-                    Kami bekerja sama dengan petani kopi nusantara untuk memastikan setiap biji kopi disangrai dengan sempurna.
-                </p>
-                <div class="about-info">
-                    <p>📍 <strong>Alamat:</strong> Jl. Kopi Nusantara No. 12</p>
-                    <p>⏰ <strong>Jam Buka:</strong> Setiap Hari, 08.00 - 22.00 WIB</p>
-                </div>
-            </div>
-        </section>
-
     </aside>
 
     <!-- Menghubungkan ke file JavaScript -->
