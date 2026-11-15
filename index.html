@@ -27,15 +27,17 @@
             <button class="btn-primary" onclick="document.getElementById('menu').scrollIntoView({behavior: 'smooth'})">Pesan Sekarang</button>
         </section>
 
-        <!-- Bagian Promo (Opsional, agar link #promo juga berfungsi) -->
-        <section id="promo" class="promo-section">
-            <div class="section-header">
-                <h2>Promo Spesial Hari Ini</h2>
-            </div>
-            <div class="promo-banner">
-                <p>🎉 <strong>Diskon 20%</strong> untuk pembelian minimal 2 cup kopi varian apa saja!</p>
-            </div>
-        </section>
+        
+<section id="promo" class="promo-section">
+    <div class="section-header">
+        <h2>Promo Spesial Hari Ini</h2>
+    </div>
+    <div class="promo-banner">
+        <p>🎉 <strong>Diskon 20%</strong> untuk pembelian minimal 2 item (Kode: <strong>KOPIHEMAT</strong>)</p>
+        <button id="btn-klaim-promo" class="btn-primary" onclick="aktifkanPromo()">Gunakan Promo</button>
+    </div>
+</section>
+
 
         <!-- Bagian Menu -->
         <section id="menu">
@@ -83,6 +85,11 @@
         </div>
 
         <div class="cart-footer">
+            <div class="discount-row" id="discount-row" style="display: none; color: #4CAF50; font-size: 14px; margin-bottom: 5px; justify-content: space-between;">
+    <span>Diskon Promo (20%)</span>
+    <span id="cart-discount">-Rp0</span>
+</div>
+
             <div class="total-row">
                 <span>Total</span>
                 <span id="cart-total">Rp0</span>
