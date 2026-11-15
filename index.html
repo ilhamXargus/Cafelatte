@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cafelatte - Seduh Kebahagiaan</title>
     <link href="https://googleapis.com" rel="stylesheet">
+    <!-- Menghubungkan ke file CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,73 +21,49 @@
             </nav>
         </header>
 
-        <!-- Hero Banner 2 Kolom (Teks Kiri + Menu Unggulan Kanan) -->
-        <section class="hero hero-split">
-            <div class="hero-text">
-                <h1>Seduh Kebahagiaan di Setiap Cangkir, Langsung ke Meja Anda.</h1>
-                <p>Pilih biji kopi lokal pilihan, kustom rasa sesukamu, dan pesan dalam hitungan detik.</p>
-                <div class="hero-badges">
-                    <span>⚡ Siap 5 Menit</span>
-                    <span>🌱 100% Biji Lokal</span>
-                    <span>⭐ 4.9/5</span>
-                </div>
-                <button class="btn-primary" onclick="document.getElementById('menu').scrollIntoView({behavior: 'smooth'})">Pesan Sekarang</button>
-            </div>
-
-            <!-- Kartu Menu Unggulan di Kanan Hero -->
-            <div class="hero-featured">
-                <span class="featured-tag">🔥 Terlaris Hari Ini</span>
-                <img src="https://unsplash.com" alt="Es Kopi Susu Senja">
-                <div class="featured-info">
-                    <h4>Es Kopi Susu Senja</h4>
-                    <p>Rp22.000</p>
-                </div>
-                <button class="btn-quick-add" onclick="addToCart(1)">+ Pesan Cepat</button>
-            </div>
+        <section class="hero">
+            <h1>Seduh Kebahagiaan di Setiap Cangkir, Langsung ke Meja Anda.</h1>
+            <p>Pilih biji kopi lokal pilihan, kustom rasa sesukamu, dan pesan dalam hitungan detik.</p>
+            <button class="btn-primary" onclick="document.getElementById('menu').scrollIntoView({behavior: 'smooth'})">Pesan Sekarang</button>
         </section>
 
-        <!-- Bagian Promo -->
-        <section id="promo" class="promo-section">
-            <div class="section-header">
-                <h2>Promo Spesial Hari Ini</h2>
-            </div>
-            <div class="promo-banner">
-                <div>
-                    <p>🎉 <strong>Diskon 20%</strong> untuk pembelian minimal 2 item (Kode: <strong>KOPIHEMAT</strong>)</p>
-                    <small id="promo-hint" style="color: #FFD54F; display: none; margin-top: 6px;">⚠️ Tambahkan minimal 2 item ke keranjang untuk menikmati diskon!</small>
-                </div>
-                <button id="btn-klaim-promo" class="btn-primary" onclick="aktifkanPromo()">Gunakan Promo</button>
-            </div>
-        </section>
+       
+<section id="promo" class="promo-section">
+    <div class="section-header">
+        <h2>Promo Spesial Hari Ini</h2>
+    </div>
+    <div class="promo-banner">
+        <p>🎉 <strong>Diskon 20%</strong> untuk pembelian minimal 2 item (Kode: <strong>KOPIHEMAT</strong>)</p>
+        <button id="btn-klaim-promo" class="btn-primary" onclick="aktifkanPromo()">Gunakan Promo</button>
+    </div>
+</section>
 
-        <!-- Bagian Menu + Pencarian -->
+
+        <!-- Bagian Menu -->
         <section id="menu">
             <div class="section-header">
                 <h2>Menu Pilihan Hari Ini</h2>
-                <div class="menu-controls">
-                    <input type="text" id="search-input" class="search-box" placeholder="🔍 Cari kopi atau camilan..." onkeyup="searchMenu()">
-                    <div class="categories">
-                        <button class="active" onclick="filterMenu('all', this)">Semua</button>
-                        <button onclick="filterMenu('kopi', this)">Kopi</button>
-                        <button onclick="filterMenu('non-kopi', this)">Non-Kopi</button>
-                        <button onclick="filterMenu('camilan', this)">Camilan</button>
-                    </div>
+                <div class="categories">
+                    <button class="active" onclick="filterMenu('all', this)">Semua</button>
+                    <button onclick="filterMenu('kopi', this)">Kopi</button>
+                    <button onclick="filterMenu('non-kopi', this)">Non-Kopi</button>
+                    <button onclick="filterMenu('camilan', this)">Camilan</button>
                 </div>
             </div>
 
             <div class="menu-grid" id="menu-container">
-                <!-- Daftar menu diisi oleh JavaScript -->
+                <!-- Daftar menu akan diisi otomatis oleh JavaScript -->
             </div>
         </section>
 
-        <!-- Bagian Tentang Kami -->
+        <!-- Bagian Tentang Kami (Target dari href="#tentang") -->
         <section id="tentang" class="about-section">
             <div class="section-header">
                 <h2>Tentang Kami</h2>
             </div>
             <div class="about-content">
                 <p>
-                    <strong>Cafelatte</strong> hadir untuk membawa kehangatan kopi lokal terbaik langsung ke meja Anda. 
+                    <strong>Cafelatte</strong> hadir untuk membawa kehangatan kopi lokal terbaik langsung ke meja Anda.
                     Kami bekerja sama dengan petani kopi nusantara untuk memastikan setiap biji kopi disangrai dengan sempurna dan diseduh sepenuh hati.
                 </p>
                 <div class="about-info">
@@ -108,22 +85,16 @@
         </div>
 
         <div class="cart-footer">
-            <!-- Input Nomor Meja & Catatan -->
-            <div class="order-notes">
-                <input type="text" id="table-number" placeholder="Nomor Meja (cth: Meja 05)">
-                <input type="text" id="order-note" placeholder="Catatan (cth: Less sugar, es sedikit)">
-            </div>
-
             <div class="discount-row" id="discount-row" style="display: none; color: #4CAF50; font-size: 14px; margin-bottom: 5px; justify-content: space-between;">
-                <span>Diskon Promo (20%)</span>
-                <span id="cart-discount">-Rp0</span>
-            </div>
+    <span>Diskon Promo (20%)</span>
+    <span id="cart-discount">-Rp0</span>
+</div>
 
             <div class="total-row">
                 <span>Total</span>
                 <span id="cart-total">Rp0</span>
             </div>
-            
+           
             <p style="font-size: 12px; color: #C5B8B0; margin-bottom: 8px;">Pilih Pembayaran:</p>
             <div class="payment-methods">
                 <div class="pay-badge selected" onclick="selectPayment(this)">QRIS</div>
@@ -135,20 +106,7 @@
         </div>
     </aside>
 
-    <!-- Popup Struk Pembayaran -->
-    <div id="receipt-modal" class="modal-overlay" style="display: none;">
-        <div class="modal-card">
-            <div class="modal-header">
-                <h3>✅ Pesanan Diterima!</h3>
-                <p>Nomor Antrean: <strong id="receipt-queue">#A-12</strong></p>
-            </div>
-            <div class="modal-body" id="receipt-details">
-                <!-- Rincian diisi otomatis oleh JS -->
-            </div>
-            <button class="btn-checkout" onclick="closeReceipt()">Selesai & Tutup</button>
-        </div>
-    </div>
-
+    <!-- Menghubungkan ke file JavaScript -->
     <script src="script.js"></script>
 </body>
 </html>
