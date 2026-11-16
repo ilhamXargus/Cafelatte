@@ -4,16 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cafelatte - Seduh Kebahagiaan</title>
-    <link href="https://googleapis.com" rel="stylesheet">
-    <!-- Menghubungkan ke file CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <!-- Notifikasi Toast -->
+    <div id="toast-container"></div>
+
     <!-- Konten Kiri -->
     <div class="main-content">
         <header>
-            <div class="logo">☕ Cafelatte</div>
+            <div class="logo">☕ Cafe<span>latte</span></div>
             <nav>
                 <a href="#menu">Menu</a>
                 <a href="#promo">Promo</a>
@@ -22,41 +24,43 @@
         </header>
 
         <section class="hero">
+            <span class="badge-hero">✨ Biji Kopi 100% Arabika Nusantara</span>
             <h1>Seduh Kebahagiaan di Setiap Cangkir, Langsung ke Meja Anda.</h1>
             <p>Pilih biji kopi lokal pilihan, kustom rasa sesukamu, dan pesan dalam hitungan detik.</p>
             <button class="btn-primary" onclick="document.getElementById('menu').scrollIntoView({behavior: 'smooth'})">Pesan Sekarang</button>
         </section>
 
-       
-<section id="promo" class="promo-section">
-    <div class="section-header">
-        <h2>Promo Spesial Hari Ini</h2>
-    </div>
-    <div class="promo-banner">
-        <p>🎉 <strong>Diskon 20%</strong> untuk pembelian minimal 2 item (Kode: <strong>KOPIHEMAT</strong>)</p>
-        <button id="btn-klaim-promo" class="btn-primary" onclick="aktifkanPromo()">Gunakan Promo</button>
-    </div>
-</section>
-
+        <section id="promo" class="promo-section">
+            <div class="section-header">
+                <h2>Promo Spesial Hari Ini</h2>
+            </div>
+            <div class="promo-banner">
+                <p>🎉 <strong>Diskon 20%</strong> untuk pembelian minimal 2 item (Kode: <strong>KOPIHEMAT</strong>)</p>
+                <button id="btn-klaim-promo" class="btn-primary" onclick="aktifkanPromo()">Gunakan Promo</button>
+            </div>
+        </section>
 
         <!-- Bagian Menu -->
         <section id="menu">
             <div class="section-header">
                 <h2>Menu Pilihan Hari Ini</h2>
-                <div class="categories">
-                    <button class="active" onclick="filterMenu('all', this)">Semua</button>
-                    <button onclick="filterMenu('kopi', this)">Kopi</button>
-                    <button onclick="filterMenu('non-kopi', this)">Non-Kopi</button>
-                    <button onclick="filterMenu('camilan', this)">Camilan</button>
+                <div class="menu-controls">
+                    <input type="text" id="search-input" placeholder="🔍 Cari kopi atau camilan..." onkeyup="searchMenu()">
+                    <div class="categories">
+                        <button class="active" onclick="filterMenu('all', this)">Semua</button>
+                        <button onclick="filterMenu('kopi', this)">Kopi</button>
+                        <button onclick="filterMenu('non-kopi', this)">Non-Kopi</button>
+                        <button onclick="filterMenu('camilan', this)">Camilan</button>
+                    </div>
                 </div>
             </div>
 
             <div class="menu-grid" id="menu-container">
-                <!-- Daftar menu akan diisi otomatis oleh JavaScript -->
+                <!-- Daftar menu diisi otomatis oleh script.js -->
             </div>
         </section>
 
-        <!-- Bagian Tentang Kami (Target dari href="#tentang") -->
+        <!-- Bagian Tentang Kami -->
         <section id="tentang" class="about-section">
             <div class="section-header">
                 <h2>Tentang Kami</h2>
@@ -78,20 +82,23 @@
     <!-- Keranjang Belanja Kanan -->
     <aside class="cart-sidebar">
         <div>
-            <div class="cart-header">Keranjang Saya (<span id="cart-count">0</span> Item)</div>
+            <div class="cart-header">
+                <span>🛒 Keranjang Saya (<span id="cart-count">0</span>)</span>
+                <button class="btn-clear" onclick="clearCart()" title="Kosongkan Keranjang">Hapus Semua</button>
+            </div>
             <div class="cart-items" id="cart-items">
                 <p class="empty-msg">Keranjang masih kosong. Yuk pilih kopimu!</p>
             </div>
         </div>
 
         <div class="cart-footer">
-            <div class="discount-row" id="discount-row" style="display: none; color: #4CAF50; font-size: 14px; margin-bottom: 5px; justify-content: space-between;">
-    <span>Diskon Promo (20%)</span>
-    <span id="cart-discount">-Rp0</span>
-</div>
+            <div class="discount-row" id="discount-row">
+                <span>Diskon Promo (20%)</span>
+                <span id="cart-discount">-Rp0</span>
+            </div>
 
             <div class="total-row">
-                <span>Total</span>
+                <span>Total Bayar</span>
                 <span id="cart-total">Rp0</span>
             </div>
            
@@ -106,8 +113,62 @@
         </div>
     </aside>
 
-    <!-- Menghubungkan ke file JavaScript -->
+    <!-- MODAL 1: Kustomisasi Menu -->
+    <div id="custom-modal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 id="modal-item-name">Nama Menu</h3>
+                <button class="close-modal" onclick="closeModal('custom-modal')">&times;</button>
+            </div>
+            <p id="modal-item-desc" class="modal-desc"></p>
+            
+            <div id="drink-options">
+                <div class="option-group">
+                    <label>Penyajian:</label>
+                    <div class="radio-group" id="temp-options">
+                        <button type="button" class="opt-btn selected" onclick="selectOpt(this, 'temp')">🧊 Ice</button>
+                        <button type="button" class="opt-btn" onclick="selectOpt(this, 'temp')">🔥 Hot</button>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <label>Tingkat Gula:</label>
+                    <div class="radio-group" id="sugar-options">
+                        <button type="button" class="opt-btn selected" onclick="selectOpt(this, 'sugar')">Normal</button>
+                        <button type="button" class="opt-btn" onclick="selectOpt(this, 'sugar')">Less Sugar</button>
+                        <button type="button" class="opt-btn" onclick="selectOpt(this, 'sugar')">No Sugar</button>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <label>Tambahan (Opsional):</label>
+                    <div class="checkbox-group">
+                        <label class="check-item"><input type="checkbox" value="Oat Milk" data-price="5000" onchange="updateModalPrice()"> Ganti Oat Milk (+Rp5.000)</label>
+                        <label class="check-item"><input type="checkbox" value="Extra Espresso" data-price="4000" onchange="updateModalPrice()"> Extra Espresso Shot (+Rp4.000)</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="option-group">
+                <label>Catatan untuk Barista:</label>
+                <input type="text" id="item-note" placeholder="Contoh: Es batu sedikit saja..." class="note-input">
+            </div>
+
+            <button class="btn-checkout" id="btn-confirm-add" onclick="confirmAddToCart()">Tambah ke Keranjang - Rp0</button>
+        </div>
+    </div>
+
+    <!-- MODAL 2: Struk Pembayaran -->
+    <div id="receipt-modal" class="modal-overlay">
+        <div class="modal-box receipt-box">
+            <div class="receipt-icon">✅</div>
+            <h3>Pesanan Diterima!</h3>
+            <p class="queue-number">Nomor Antrean: <strong id="receipt-queue">#A01</strong></p>
+            <div id="receipt-details" class="receipt-details"></div>
+            <button class="btn-primary" style="width: 100%; margin-top: 16px;" onclick="closeModal('receipt-modal')">Selesai & Pesan Lagi</button>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
-
