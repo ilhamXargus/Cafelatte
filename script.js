@@ -452,3 +452,4 @@ function checkout() {
 }
 
 renderMenu();
+
