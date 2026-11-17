@@ -8,6 +8,7 @@ Dalam tahap ini kami sebagai perancang meminta bantuan ai,dengan menggunakan pro
     "posisikan dirimu sebagai pengembang/pembuat website yang ingin membuat website dengan ide caffelate. berikan saya sitak dalam bentuk index.html"
     "posisikan dirimu sebagai pengembang/pembuat website yang ingin membuat website dengan ide caffelate. berikan saya sitak dalam bentuk style.css"
     "posisikan dirimu sebagai pengembang/pembuat website yang ingin membuat website dengan ide caffelate. berikan saya sitak dalam bentuk scropt.js"
+
 3. pemecahan masalah dan penanganan debugging
 
 4. refleksi dan penjelasan kode
