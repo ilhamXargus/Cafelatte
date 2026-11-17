@@ -10,6 +10,7 @@ Dalam tahap ini kami sebagai perancang meminta bantuan ai,dengan menggunakan pro
     "posisikan dirimu sebagai pengembang/pembuat website yang ingin membuat website dengan ide caffelate. berikan saya sitak dalam bentuk scropt.js"
 
 3.) pemecahan masalah dan penanganan debugging
+Sebagai seorang pengembang,saat saya menghadapi masalah dalam coding dengan bantuan ai, saya menemph pendekatan yang terstruktur:pertama tama yang menganalisis pesan galat atau mengisolasi bagian kode yang bermasalah secara mandiri untuk memahami akar masalahnya,lalu saya memanfaatkan AI untuk mengeksplorasi ide,menyusun kerangka, atau mendiskusikan opsi perbaikan.Setelah itu,saya tidak langsung menelan atau menyalin kode secara utuh,melainkan meneelaah logikanya,menguji ulang,serta menyesuikannya secara mandiri agar saya tetap memegang penuh tanggung jawab atas kebenran fungs program tersebut.
 
 4.)refleksi dan penjelasan kode:
 _1.code:
